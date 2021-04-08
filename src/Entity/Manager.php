@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\ManagerRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\Json;
 
 /**
  * @ORM\Entity(repositoryClass=ManagerRepository::class)
@@ -76,18 +78,8 @@ class Manager implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
+        //retourne le role MANAGER comme demandé, et prépare la structure pour le cas où un rôle USER soit ajouté dans le futur
+        return ['ROLE_USER','ROLE_MANAGER'];
     }
 
     /**
