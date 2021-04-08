@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Création d'un projet{% endblock %}
+
+{% block body %}
+    <form action="{{ path('project_creation') }}" method="post">
+        <small>Nom du projet :</small>
+        Name: <input type="text" name="name">
+        <button type="submit">Ajouter</button>
+    </form>
+{% endblock %}

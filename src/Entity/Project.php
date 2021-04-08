@@ -27,12 +27,12 @@ class Project
     /**
      * @ORM\Column(type="datetime")
      */
-    private $started_at;
+    private $startedAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $ended_at;
+    private $endedAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="project_id", orphanRemoval=true)
@@ -40,9 +40,9 @@ class Project
     private $tasks;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=255)
      */
-    private $project_status;
+    private $projectStatus;
 
     public function __construct()
     {
@@ -68,24 +68,24 @@ class Project
 
     public function getStartedAt(): ?\DateTimeInterface
     {
-        return $this->started_at;
+        return $this->startedAt;
     }
 
-    public function setStartedAt(\DateTimeInterface $started_at): self
+    public function setStartedAt(\DateTimeInterface $startedAt): self
     {
-        $this->started_at = $started_at;
+        $this->startedAt = $startedAt;
 
         return $this;
     }
 
     public function getEndedAt(): ?\DateTimeInterface
     {
-        return $this->ended_at;
+        return $this->endedAt;
     }
 
-    public function setEndedAt(?\DateTimeInterface $ended_at): self
+    public function setEndedAt(?\DateTimeInterface $endedAt): self
     {
-        $this->ended_at = $ended_at;
+        $this->endedAt = $endedAt;
 
         return $this;
     }
@@ -122,12 +122,12 @@ class Project
 
     public function getProjectStatus(): ?bool
     {
-        return $this->project_status;
+        return $this->projectStatus;
     }
 
-    public function setProjectStatus(bool $project_status): self
+    public function setProjectStatus(bool $projectStatus): self
     {
-        $this->project_status = $project_status;
+        $this->projectStatus = $projectStatus;
 
         return $this;
     }

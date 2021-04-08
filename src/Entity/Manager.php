@@ -39,12 +39,12 @@ class Manager implements UserInterface
     /**
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $last_login;
+    private $lastLogin;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -119,24 +119,24 @@ class Manager implements UserInterface
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getLastLogin(): ?\DateTimeInterface
     {
-        return $this->last_login;
+        return $this->lastLogin;
     }
 
-    public function setLastLogin(?\DateTimeInterface $last_login): self
+    public function setLastLogin(?\DateTimeInterface $lastLogin): self
     {
-        $this->last_login = $last_login;
+        $this->lastLogin = $lastLogin;
 
         return $this;
     }
