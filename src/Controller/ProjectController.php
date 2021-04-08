@@ -43,7 +43,7 @@ class ProjectController extends AbstractController
             $project = new Project();
             $project->setName($request->request->get('name'));
             $project->setStartedAt(new \DateTime());
-            $project->setProjectStatus("Nouveau");
+            $project->setProjectStatus('Nouveau');
 
             $entityManager->persist($project);
             $entityManager->flush();
@@ -59,18 +59,15 @@ class ProjectController extends AbstractController
      * @Route("/project{id}", name="project_manage")
      * @param Request $request
      * @param ProjectRepository $projectRepository
-     * @param TaskRepository $taskRepository
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function manage($id,
                          Request $request,
                          ProjectRepository $projectRepository,
-                         TaskRepository $taskRepository,
                          EntityManagerInterface $entityManager)
     {
         $project = $projectRepository->find($id);
-        $task = $taskRepository->find($id);
         if ($project === null) {
             throw new NotFoundHttpException();
         }
@@ -78,7 +75,6 @@ class ProjectController extends AbstractController
         if ($request->getMethod() == 'GET') {
             return $this->render('project/project_manage.html.twig', [
                 'project' => $project,
-                'task' => $task
             ]);
         }
     }
@@ -89,18 +85,15 @@ class ProjectController extends AbstractController
      * @Route("/project{id}/addTask", name="project_add_task")
      * @param Request $request
      * @param ProjectRepository $projectRepository
-     * @param TaskRepository $taskRepository
      * @param EntityManagerInterface $entityManager
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function addTask($id,
                          Request $request,
                          ProjectRepository $projectRepository,
-                         TaskRepository $taskRepository,
                          EntityManagerInterface $entityManager)
     {
         $project = $projectRepository->find($id);
-        $task = $taskRepository->find($id);
         if ($project === null) {
             throw new NotFoundHttpException();
         }
@@ -108,23 +101,23 @@ class ProjectController extends AbstractController
         if ($request->getMethod() == 'GET') {
             return $this->render('project/project_add_task.html.twig', [
                 'project' => $project,
-                'task' => $task
             ]);
         }
 
         if ($request->getMethod() == 'POST') {
             $task = new Task();
+            
 
             $task->setTitle($request->request->get('title'));
             $task->setDescription($request->request->get('description'));
             $task->setCreatedAt(new \DateTime());
-            $task->setProjectId($id);
+            $task->setProject($project);
+            
 
             $entityManager->persist($task);
             $entityManager->flush();
-            return $this->redirectToRoute('article_show', ['id' => $id]);
+            return $this->redirectToRoute('project_manage', ['id' => $id]);
         }
-
 
     }
 

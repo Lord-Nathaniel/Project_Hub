@@ -35,7 +35,7 @@ class Project
     private $endedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="project_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="project", orphanRemoval=true)
      */
     private $tasks;
 
@@ -102,7 +102,7 @@ class Project
     {
         if (!$this->tasks->contains($task)) {
             $this->tasks[] = $task;
-            $task->setProjectId($this);
+            $task->setProject($this);
         }
 
         return $this;
@@ -112,20 +112,20 @@ class Project
     {
         if ($this->tasks->removeElement($task)) {
             // set the owning side to null (unless already changed)
-            if ($task->getProjectId() === $this) {
-                $task->setProjectId(null);
+            if ($task->getProject() === $this) {
+                $task->setProject(null);
             }
         }
 
         return $this;
     }
 
-    public function getProjectStatus(): ?bool
+    public function getProjectStatus(): ?string
     {
         return $this->projectStatus;
     }
 
-    public function setProjectStatus(bool $projectStatus): self
+    public function setProjectStatus(string $projectStatus): self
     {
         $this->projectStatus = $projectStatus;
 

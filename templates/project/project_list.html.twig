@@ -27,7 +27,7 @@
             <td>{{ project.projectStatus }}</td>
             <td>{{ project.tasks.count }}</td>
             <td>{{ project.startedAt|date('Y-m-d') }}</td>
-            <td><a href="{{ path('project_manage', {id: project.id}) }}">Voir l'article</a></td>
+            <td><a class="btn btn-lg btn-light" href="{{ path('project_manage', {id: project.id}) }}">Voir l'article</a></td>
         </tr>
 
         {% endfor %}

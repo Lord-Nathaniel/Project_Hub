@@ -4,11 +4,11 @@
 
 {% block body %}
 <h1>Projet {{ project.name }} </h1>
-<small>Créé le : {{ project.started_at }} </small>
-<small>Statut du projet : {{ project.project_status }}</small>
+<small>Créé le : {{ project.startedAt|date('Y-m-d') }} </small>
+<small>Statut du projet : {{ project.projectStatus }}</small>
 
-<a class="btn btn-lg btn-light" href="{{ path('project_manage', {id: project.id}) }}">
-Voir l'article
+<a class="btn btn-lg btn-light" href="{{ path('project_add_task', {id: project.id}) }}">
+Ajouter une tâche
 </a>
 
 <table>
@@ -20,12 +20,12 @@ Voir l'article
         </tr>
     </thead>
     <tbody>
-        {% for task in tasks %}
+        {% for task in project.tasks %}
         
         <tr>
-            <td>{{ project.title }}</td>
-            <td>{{ project.description }}</td>
-            <td>{{ project.created_at }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.createdAt|date('Y-m-d') }}</td>
         </tr>
 
         {% endfor %}

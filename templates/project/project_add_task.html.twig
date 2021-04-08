@@ -3,11 +3,11 @@
 {% block title %}Ajout d'une tâche au projet {{ project.name }} {% endblock %}
 
 {% block body %}
-    <form action="{{ path('project_add_tasks') }}" method="post">
+    <form action="{{ path('project_add_task', {id: project.id}) }}" method="post">
         <small>Titre de la tâche :</small>
-        Title: <input type="text" name="title">
+        <input type="text" name="title">
         <small>Description de la tâche :</small>
-        Description: <textarea name="description" id="" cols="30" rows="10"></textarea>
-        <button type="submit">Créer la tâche</button>
+        <textarea name="description" id="" cols="30" rows="10"></textarea>
+        <button class="btn btn-lg btn-light" type="submit">Créer la tâche</button>
     </form>
 {% endblock %}
