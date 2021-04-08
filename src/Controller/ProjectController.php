@@ -77,6 +77,22 @@ class ProjectController extends AbstractController
                 'project' => $project,
             ]);
         }
+
+        if ($project->getProjectStatus() != "Terminé"){
+            if ($request->getMethod() == 'POST') {
+                $result = $request->request->get('status');
+                $project->setProjectStatus($result);
+                //si le projet est terminé, alors on rentre la date de fin dans la BDD
+                if ($result == "Terminé")
+                {
+                    $project->setEndedAt(new \DateTime());
+                }
+
+                $entityManager->persist($project);
+                $entityManager->flush();
+                return $this->redirectToRoute('project_manage', ['id' => $id]);
+            }
+        }
     }
 
     //************************ Ajout d'une tâche à un projet ************************************************** */

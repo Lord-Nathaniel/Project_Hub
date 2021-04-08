@@ -4,33 +4,57 @@
 
 {% block body %}
 <h1>Projet {{ project.name }} </h1>
-<small>Créé le : {{ project.startedAt|date('Y-m-d') }} </small>
-<small>Statut du projet : {{ project.projectStatus }}</small>
+<section>
+    <small>Créé le : {{ project.startedAt|date('Y-m-d') }} </small>
+    {% if project.projectStatus != "Terminé" %}
+    {# Si un projet n'est pas terminé, on peut changer son status #}
+    <form action="{{ path('project_manage', {id: project.id}) }}" method="post">
+        <small>Statut du projet :</small>
+        <select name="status" id="project_status">
+        {% if project.projectStatus == "Nouveau" %}
+            <option value="Nouveau" selected>Nouveau</option>
+            <option value="En cours">En cours</option>
+        {% else %}
+            <option value="Nouveau">Nouveau</option>
+            <option value="En cours" selected>En cours</option>
+        {% endif %}    
+            <option value="Terminé">Terminé</option>
+        </select>
+        <button class="btn btn-sm btn-lg btn-light" type="submit">Changer</button>        
+    </form>
+    {% else %}
+    <small>Statut du projet : Terminé </small>
+    {% endif %}
+</section>
+<section>
+    {% if project.projectStatus != "Terminé" %} 
+    {# Si un projet est terminé, alors on ne peux plus lui rajouter de tâches #}
+    <a class="btn btn-lg btn-light" href="{{ path('project_add_task', {id: project.id}) }}">
+    Ajouter une tâche
+    </a>
+    {% endif %}
+</section>
+<section>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom de la tâche</th>
+                <th>Description</th>
+                <th>Ajoutée le</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in project.tasks %}
+            
+            <tr>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.createdAt|date('Y-m-d') }}</td>
+            </tr>
 
-<a class="btn btn-lg btn-light" href="{{ path('project_add_task', {id: project.id}) }}">
-Ajouter une tâche
-</a>
-
-<table>
-    <thead>
-        <tr>
-            <th>Nom de la tâche</th>
-            <th>Description</th>
-            <th>Ajoutée le</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for task in project.tasks %}
-        
-        <tr>
-            <td>{{ task.title }}</td>
-            <td>{{ task.description }}</td>
-            <td>{{ task.createdAt|date('Y-m-d') }}</td>
-        </tr>
-
-        {% endfor %}
-    </tbody>
-</table>
-
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
   
 {% endblock %}
